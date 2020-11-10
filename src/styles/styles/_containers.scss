@@ -1,0 +1,130 @@
+@use '../settings/screens';
+
+@use 'sass:map';
+@use '../functions/maps' as _maps;
+
+@use '../mixins/flex';
+
+@use '../styles/bootstrap';
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Настройки
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  $settings: (
+    padding-horizontal: (
+      default: 15px,
+      large: _maps.get( bootstrap.$settings, spacing ),
+      medium: _maps.get( bootstrap.$settings, spacing ),
+      middle: 15px,
+      small: 15px,
+      all: 6px,
+    ),
+
+    padding-verticals: (
+
+      // Общие отступы
+      default: (
+        large: 50px,
+        medium: 50px,
+        middle: 30px,
+        default: 15px,
+      )
+    ),
+
+    width: (
+      default: 1200px,
+      middle: 900px,
+      small: 600px,
+      all: 100%,
+    )
+  );
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Настройки
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  // Базовый стиль
+  .container {
+    @include screens.media((
+      padding-left: _maps.get( $settings, padding-horizontal ),
+      padding-right: _maps.get( $settings, padding-horizontal ),
+    ));
+    width: 100%; margin: 0 auto;
+
+
+    // Ширина контейнера
+    @each $screen in _maps.get( screens.$breakpoints-sort, to-min ) {
+      @include screens.for-size( $screen ) {
+        $__width: _maps.get( $settings, width, $screen );
+        $__pad_h: _maps.get( $settings, padding-horizontal, $screen );
+
+        max-width: calc( #{ $__width });
+      }
+    }
+
+
+    // Отступы сверху и снизу
+    @each $key, $values in _maps.get( $settings, padding-verticals ) {
+      $class: '';
+      @if ( $key != default ) { $class: '_' + $key; }
+
+      &#{ $class } {
+        @include screens.media((
+          padding-top: _maps.get( $settings, padding-verticals, $key ),
+          padding-bottom: _maps.get( $settings, padding-verticals, $key ),
+        ));
+
+        & > .title {
+          @include screens.media((
+            margin-bottom: _maps.get( $settings, padding-verticals, $key ),
+          ));
+        }
+
+        & > .container-spacing {
+          @include screens.media((
+            margin-top: _maps.get( $settings, padding-verticals, $key ),
+          ));
+        }
+
+        .inner-spacing {
+          @include screens.media((
+            margin-top: _maps.get( $settings, padding-verticals, $key ),
+          ));
+        }
+
+        @each $dimension in top bottom {
+          .minus-#{ $dimension } {
+            $__temp_sizes: _maps.get( $settings, padding-verticals, $key );
+            @each $key, $value in $__temp_sizes {
+              $__temp_sizes: map.set( $__temp_sizes, $key, -$value );
+            }
+
+            @include screens.media((
+              margin-#{ $dimension }: $__temp_sizes,
+            ));
+          }
+        }
+      }
+    }
+  }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,53 @@
+@use '../settings/base';
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Миксины
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  // Обычный TRANSITION
+  @mixin init ( $value, $important:false ) {
+    $important_str: '';
+    @if ( $important ) { $important_str: '!important'; }
+
+    -webkit-transition: $value #{$important_str};
+    -moz-transition: $value #{$important_str};
+    -ms-transition: $value #{$important_str};
+    -o-transition: $value #{$important_str};
+    transition: $value #{$important_str};
+  }
+
+
+  // Много TRANSITION параметров
+  @mixin many ( $prop, $time: base.$transition, $easing: ease, $delay: 0s ) {
+    $temp_transition: ();
+
+    @for $i from 1 through length($prop) {
+      @for $j from 0 to (length($prop)) - (length($time)) {
+        $time: join($time, nth($time, -1));
+      }
+      @for $j from 0 to (length($prop)) - (length($easing)) {
+        $easing: join($easing, nth($easing, -1));
+      }
+      @for $j from 0 to (length($prop)) - (length($delay)) {
+        $delay: join($delay, nth($delay, -1));
+      }
+
+      $temp_transition: append(
+        $temp_transition,
+        (nth($prop, $i) nth($time, $i) nth($easing, $i) nth($delay, $i)),
+        $separator: comma
+      );
+    }
+
+    @include init ( $temp_transition );
+  }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Миксины
+//----------------------------------------------------------------------------------------------------------------------------------------

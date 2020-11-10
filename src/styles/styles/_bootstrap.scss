@@ -1,0 +1,220 @@
+@use '../settings/screens';
+
+@use '../functions/maps' as _maps;
+
+@use '../mixins/flex';
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Настройки
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  $settings: (
+    spacing: 40px,
+    margin: 5px,
+
+    cols: ( 3 ),
+    cols-default: 3,
+  );
+
+
+  $align-items: (
+    //center: center,
+    //around: space-around
+  );
+
+
+  $text-align: (
+    //left: left,
+    //right: right,
+    center: center
+  );
+
+
+  $widths: (
+    //percent: (
+    //  unit: '%',
+    //  pref: 'w',
+    //  min: 80,
+    //  max: 100,
+    //),
+  );
+
+
+  $margins: (
+    //all: top right bottom left,
+    //t: top,
+    //r: right,
+    //b: bottom,
+    //l: left,
+    //x: left right,
+    //y: top bottom,
+  );
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Настройки
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили колонок
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  // Базовые стили колонок
+  .row {
+    $__spacing: _maps.get( $settings, spacing );
+
+    @include flex.init( row, wrap, flex-start, flex-start );
+    @include flex.width( calc( 100% + #{ $__spacing * 2 }));
+    margin-left: -$__spacing;
+    margin-right: -$__spacing;
+
+    & > .col, & > [ class *= 'col-' ] {
+      padding-left: $__spacing;
+      padding-right: $__spacing;
+    }
+  }
+
+
+  // Размеры колонок
+  @each $screen in _maps.get( screens.$breakpoints-sort, to-min ) {
+    $__screen_class: '-' + $screen;
+    $__resolution: _maps.get( screens.$breakpoints, $screen );
+    @if ( $screen == all ) { $__screen_class: ''; }
+
+    @media screen and ( min-width: #{ screens.get-min( $__resolution )}px ) {
+      @each $cols in _maps.get( $settings, cols ) {
+        $__cols_class: '.cols' + $__screen_class + '-' + $cols;
+        @if ( $cols == _maps.get( $settings, cols-default )) { $__cols_class: ''; }
+
+        $__col_width: 100% / $cols;
+
+
+        @for $col from 1 through $cols {
+          $__col_class: '.col' + $__screen_class + '-' + $col;
+
+          #{ $__col_class }#{ $__cols_class } {
+            @include flex.width( $__col_width * $col );
+          }
+        }
+      }
+    }
+  }
+
+
+  // Ширина в процентах
+  @each $screen in _maps.get( screens.$breakpoints-sort, to-min ) {
+    $__screen_class: '-' + $screen;
+    $__resolution: _maps.get( screens.$breakpoints, $screen );
+    @if ( $screen == all ) { $__screen_class: ''; }
+
+    @media screen and ( min-width: #{ screens.get-min( $__resolution )}px ) {
+      @each $key, $data in $widths {
+        $__pref: _maps.get( $data, pref );
+        $__min: _maps.get( $data, min );
+        $__max: _maps.get( $data, max );
+        $__unit: _maps.get( $data, unit );
+
+        @for $num from $__min through $__max {
+          @if ( not _maps.has-key( $data, less, $num )) {
+            .#{ $__pref }#{ $__screen_class }-#{ $num } {
+              width: #{ $num }#{ $__unit };
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили колонок
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Выравнивание контента
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  // Флекс элементы по второстепенной оси
+  .align-items {
+    @each $key, $value in $align-items {
+      &-#{ $key } { align-items: $value; }
+    }
+  }
+
+
+  // Флекс элементы по второстепенной оси
+  @each $screen in _maps.get( screens.$breakpoints-sort, to-min ) {
+    $__screen_class: '-' + $screen;
+    $__resolution: _maps.get( screens.$breakpoints, $screen );
+    @if ( $screen == all ) { $__screen_class: ''; }
+
+    @media screen and ( min-width: #{ screens.get-min( $__resolution )}px ) {
+      .text#{ $__screen_class } {
+        @each $key, $value in $text-align {
+          &-#{ $key } { text-align: $value; }
+        }
+      }
+    }
+  }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Выравнивание контента
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Отступы
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  // Флекс элементы по второстепенной оси
+  @each $screen in _maps.get( screens.$breakpoints-sort, to-min ) {
+    $__screen_class: '-' + $screen;
+    $__resolution: _maps.get( screens.$breakpoints, $screen );
+    @if ( $screen == all ) { $__screen_class: ''; }
+
+    @media screen and ( min-width: #{ screens.get-min( $__resolution )}px ) {
+      .m {
+        @each $key, $value in $margins {
+          $__dimen_class: $key;
+          @if ( $key == all ) { $__dimen_class: ''; }
+
+          @for $num from 0 through 5 {
+            &#{ $__dimen_class }#{ $__screen_class }-#{ $num } {
+              @each $dimen in $value {
+                margin-#{ $dimen }: $num * _maps.get( $settings, margin );
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .m-left-auto { margin-left: auto }
+  .m-right-auto { margin-right: auto }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Отступы
+//----------------------------------------------------------------------------------------------------------------------------------------

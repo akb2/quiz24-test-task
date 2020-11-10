@@ -1,0 +1,50 @@
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Миксины
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  // Инициализировать Flex блок
+  @mixin init ( $image: none, $pos_x: center, $pos_y: center, $repeat: no-repeat, $size: cover ) {
+    @include image( $image );
+    @include position( $pos_x, $pos_y );
+    @include repeat( $repeat );
+    @include size( $size );
+  }
+
+
+  // Картинка
+  @mixin image ( $image: none ) {
+    background-image: $image;
+  }
+
+
+  // Позиция
+  @mixin position ( $pos_x: center, $pos_y: center ) {
+    background-position: $pos_x $pos_y;
+  }
+
+
+  // Повторение
+  @mixin repeat ( $repeat: no-repeat ) {
+    background-repeat: $repeat;
+  }
+
+
+  // Размер
+  @mixin size ( $size: contain ) {
+    background-size: $size;
+  }
+
+
+  // Линейный градиент
+  @mixin linear-gradient ( $direction, $list ) {
+    background: -webkit-linear-gradient( $direction, $list );
+    background: -moz-linear-gradient( $direction, $list );
+    background: -o-linear-gradient( $direction, $list );
+    background: linear-gradient( $direction, $list );
+  }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Миксины
+//----------------------------------------------------------------------------------------------------------------------------------------
