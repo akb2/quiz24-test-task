@@ -18,29 +18,33 @@
 
   $settings: (
     padding-horizontal: (
-      default: 15px,
-      large: _maps.get( bootstrap.$settings, spacing ),
-      medium: _maps.get( bootstrap.$settings, spacing ),
-      middle: 15px,
-      small: 15px,
-      all: 6px,
+      default: _maps.get( bootstrap.$settings, spacing ),
     ),
 
     padding-verticals: (
 
       // Общие отступы
       default: (
-        large: 50px,
-        medium: 50px,
-        middle: 30px,
-        default: 15px,
-      )
+        default: 30px,
+      ),
+
+      // Средний отступ
+      medium: (
+        default: 70px,
+      ),
+
+      // Для шапки
+      header: (
+        default: 20px,
+      ),
     ),
 
     width: (
-      default: 1200px,
-      middle: 900px,
-      small: 600px,
+      maximal: 1200px,
+      large: 1200px,
+      medium: 1100px,
+      middle: 800px,
+      small: 540px,
       all: 100%,
     )
   );
@@ -121,6 +125,17 @@
           }
         }
       }
+    }
+  }
+
+
+  // Сбросить стили
+
+
+  // Убрать отступы между секциями
+  .section, header {
+    & + .section {
+      & > .container { padding-top: 0; }
     }
   }
 

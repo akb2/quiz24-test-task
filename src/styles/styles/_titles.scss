@@ -12,13 +12,33 @@
 
 
   $styles: (
+
     h1: (
-      font-size: 36px,
-      line-height: 48px,
-      font-family: Exo20,
-      font-weight: 100,
+      font-size: 45px,
+      line-height: 54px,
+      font-family: MuseoSansCyrillic,
+      font-weight: bold,
       text-transform: none,
-      color: #fff,
+      color: #000,
+      span: (
+        new-line: true,
+        font-size: 45px,
+        line-height: 54px,
+        font-family: MuseoSansCyrillic,
+        font-weight: bold,
+        text-transform: none,
+        color: #FF6A05,
+      )
+    ),
+
+    h2: (
+      font-size: 33px,
+      line-height: 40px,
+      font-family: MuseoSansCyrillic,
+      font-weight: 300,
+      text-transform: none,
+      color: #000,
+      title-spacing: 20px
     )
   );
 
@@ -37,14 +57,40 @@
 
 
   @each $tag, $style in $styles {
-    //@include font.include( _maps.get( $style, font-family ), _maps.get( $style, font-weight ));
+    @include font.include( _maps.get( $style, font-family ), _maps.get( $style, font-weight ));
+    @include font.include( _maps.get( $style, span, font-family ), _maps.get( $style, span, font-weight ));
+
+
+    @if ( _maps.has-key( $style, title-spacing )) {
+      @each $tag-2, $__style__ in $styles {
+        #{ $tag-2 }, .#{ $tag-2 } {
+          & + #{ $tag }, & + .#{ $tag } {
+            margin-top: _maps.get( $style, title-spacing );
+          }
+        }
+      }
+    }
+
 
     #{ $tag }, .#{ $tag } {
-      //@include font.init( _maps.get( $style, font-family ), _maps.get( $style, font-weight ));
+      @include font.init( _maps.get( $style, font-family ), _maps.get( $style, font-weight ));
       font-size: _maps.get( $style, font-size );
       line-height: _maps.get( $style, line-height );
       text-transform: _maps.get( $style, text-transform );
       color: _maps.get( $style, color );
+
+      @if ( _maps.has-key( $style, span )) {
+        & > span {
+          @include font.init( _maps.get( $style, span, font-family ), _maps.get( $style, span, font-weight ));
+          font-size: _maps.get( $style, span, font-size );
+          line-height: _maps.get( $style, span, line-height );
+          text-transform: _maps.get( $style, span, text-transform );
+          color: _maps.get( $style, span, color );
+
+          @if ( _maps.get( $style, span, new-line ))
+            { display: block; }
+        }
+      }
     }
   }
 

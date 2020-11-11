@@ -45,6 +45,15 @@
   }
 
 
+  // Линейный градиент
+  @mixin radial-gradient ( $list ) {
+    background: -webkit-radial-gradient( circle, $list );
+    background: -moz-radial-gradient( circle, $list );
+    background: -o-radial-gradient( circle, $list );
+    background: radial-gradient( circle, $list );
+  }
+
+
 //----------------------------------------------------------------------------------------------------------------------------------------
 // Миксины
 //----------------------------------------------------------------------------------------------------------------------------------------

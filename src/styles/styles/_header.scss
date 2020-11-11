@@ -1,0 +1,136 @@
+@use '../mixins/flex';
+@use '../mixins/font';
+@use '../mixins/line';
+@use '../mixins/background';
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Данные
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  $logo-width: 274px;
+  $logo-shadow-x: 0px;
+  $logo-shadow-y: 4px;
+  $logo-shadow-blur: 4px;
+  $logo-shadow-color: rgba( 0, 0, 0, 0.25 );
+
+
+  $phone-width: 306px;
+
+  $phone-m-font-family: MuseoSansCyrillic;
+  $phone-m-font-weight: bold;
+  $phone-m-font-style: normal;
+  $phone-m-lines: 1;
+  $phone-m-line-height: 30px;
+  $phone-m-font-size: 25px;
+
+  $phone-s-font-family: MuseoSansCyrillic;
+  $phone-s-font-weight: 300;
+  $phone-s-font-style: normal;
+  $phone-s-lines: 1;
+  $phone-s-line-height: 22px;
+  $phone-s-font-size: 18px;
+
+  $phone-shape-correct-top: 2px;
+  $phone-shape-size: 10px;
+  $phone-shape-spacing: 10px;
+  $phone-shape-color-1: #45FF58;
+  $phone-shape-color-2: #188A24;
+
+
+  $desc-spacing: 25px;
+  $desc-correct-top: 5px;
+  $desc-width: calc( 100% - #{ $logo-width + $phone-width });
+  $desc-font-family: MuseoSansCyrillic;
+  $desc-font-style: normal;
+  $desc-font-weight: 300;
+  $desc-font-size: 12px;
+  $desc-lines: 2;
+  $desc-line-height: 18px;
+  $desc-color: #000;
+  $desc-text-align: left;
+
+
+  @include font.include( $phone-m-font-family, $phone-m-font-weight, $phone-m-font-style );
+  @include font.include( $phone-s-font-family, $phone-s-font-weight, $phone-s-font-style );
+  @include font.include( $desc-font-family, $desc-font-weight, $desc-font-style );
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Данные
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  .header {
+    @include flex.init( row, nowrap, space-between, center );
+
+
+    // Логотип в шапке
+    &__logo {
+      max-width: $logo-width; width: $logo-width;
+      & > img {
+        filter: drop-shadow( $logo-shadow-x $logo-shadow-y $logo-shadow-blur $logo-shadow-color );
+        display: block; width: 100%; height: auto;
+      }
+    }
+
+
+    // Телефон
+    &__phone {
+      max-width: $phone-width; width: $phone-width;
+      text-align: right;
+
+      &-master {
+        @include font.init( $phone-m-font-family, $phone-m-font-weight, $phone-m-font-style );
+        @include line.clamp( $phone-m-lines, $phone-m-line-height );
+        font-size: $phone-m-font-size;
+      }
+
+      &-slave {
+        @include flex.init( row, nowrap, flex-end, center );
+        @include font.init( $phone-s-font-family, $phone-s-font-weight, $phone-s-font-style );
+        @include line.clamp( $phone-s-lines, $phone-s-line-height );
+        font-size: $phone-s-font-size;
+
+        &:before {
+          @include background.radial-gradient(( $phone-shape-color-1 0%, $phone-shape-color-2 100% ));
+          margin-top: $phone-shape-correct-top;
+          margin-right: $phone-shape-spacing;
+          height: $phone-shape-size;
+          width: $phone-shape-size;
+          content: ''; display: block; border-radius: 50%;
+        }
+      }
+    }
+
+
+    // Описание
+    &__desc {
+      @include font.init( $desc-font-family, $desc-font-weight, $desc-font-style );
+      @include line.clamp( $desc-lines, $desc-line-height );
+      margin-top: $desc-correct-top;
+      margin-left: $desc-spacing;
+      text-align: $desc-text-align;
+      max-width: $desc-width; width: $desc-width;
+      font-size: $desc-font-size;
+      color: $desc-color;
+      opacity: 0.8;
+    }
+  }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------

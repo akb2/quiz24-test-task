@@ -13,6 +13,20 @@
 
 
   $font-files: (
+    MuseoSansCyrillic: (
+      default-normal: ( "MuseoSansCyrl-300", "eot", "ttf", "woff" ),
+      default-italic: ( "MuseoSansCyrl-300Italic", "eot", "ttf", "woff" ),
+
+      100-normal: ( "MuseoSansCyrl-100", "eot", "ttf", "woff" ),
+      500-normal: ( "MuseoSansCyrl-500", "eot", "ttf", "woff" ),
+      700-normal: ( "MuseoSansCyrl-700", "eot", "ttf", "woff" ),
+      900-normal: ( "MuseoSansCyrl-900", "eot", "ttf", "woff" ),
+
+      100-italic: ( "MuseoSansCyrl-100Italic", "eot", "ttf", "woff" ),
+      500-italic: ( "MuseoSansCyrl-500Italic", "eot", "ttf", "woff" ),
+      700-italic: ( "MuseoSansCyrl-700Italic", "eot", "ttf", "woff" ),
+      900-italic: ( "MuseoSansCyrl-900Italic", "eot", "ttf", "woff" )
+    )
   );
 
 
