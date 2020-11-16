@@ -1,0 +1,357 @@
+@use '../settings/screens';
+
+@use 'sass:map';
+@use '../functions/maps' as _maps;
+
+@use '../mixins/flex';
+@use '../mixins/line';
+@use '../mixins/font';
+@use '../mixins/mask';
+@use '../mixins/background';
+@use '../mixins/transition';
+
+@use '../styles/bootstrap';
+@use '../styles/flags';
+@use '../styles/button';
+@use '../styles/containers';
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Настройки
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  $padding-v: 50px;
+  $padding-h: 90px;
+  $background: #F6F3ED;
+  $border-radius: 6px;
+  $spacing: 90px;
+  $transition: .5s;
+
+  $shadow-x: 0px;
+  $shadow-y: 0px;
+  $shadow-blur: 15px;
+  $shadow-color: rgba( 0, 0, 0, .25 );
+
+
+  $title-spacing: 70px;
+  $title-font-size: 30px;
+  $title-font-family: MuseoSansCyrillic;
+  $title-font-weight: 700;
+  $title-line-height: 38px;
+
+  $title-color: #000;
+  $type2-title-color: rgba( 0, 0, 0, .22 );
+  $type2-min-height: 350px;
+
+
+
+  $fc-title-font-size: 22px;
+  $fc-title-font-family: MuseoSansCyrillic;
+  $fc-title-font-weight: 500;
+  $fc-title-line-height: 28px;
+  $fc-title-color: #000;
+
+  $fc-light-desc-spacing: 25px;
+  $fc-light-desc-font-size: 15px;
+  $fc-light-desc-font-family: MuseoSansCyrillic;
+  $fc-light-desc-font-weight: 300;
+  $fc-light-desc-line-height: 18px;
+  $fc-light-desc-color: #000;
+
+  $fc-inputs-spacing: $fc-light-desc-spacing;
+  $fc-inputs-shift-left: -40px;
+  $fc-inputs-width: calc( 70% - #{ $fc-inputs-shift-left });
+
+  $fc-cols-size: 273px;
+  $fc-cols-spacing: _maps.get( bootstrap.$settings, spacing );
+  $fc-left-col-imposition: 20px;
+
+  $fc-left-col-margin-top: -50px;
+  $fc-left-col-margin-left: -50px;
+  $fc-left-col-spacing: -( $fc-cols-spacing + $fc-left-col-imposition );
+  $fc-right-col-spacing: $fc-cols-spacing;
+  $fc-right-col-width: $fc-cols-size;
+
+  $fc-left-col-width: 190px - $fc-left-col-margin-left - $fc-left-col-spacing;
+  $fc-center-col-spacing: $fc-cols-spacing;
+  $fc-center-col-width: calc( 100% - #{
+    $fc-left-col-width + $fc-left-col-spacing + $fc-left-col-margin-left +
+    $fc-center-col-spacing +
+    $fc-right-col-width + $fc-right-col-spacing
+  });
+
+  $fc-sel-spacing: 30px;
+  $fc-sel-radio-spacings: 17px;
+
+
+
+  $loader-arrow-supposed-top: 10px;
+  $loader-arrow-supposed-height: 3px;
+  $loader-arrow-width: 90px;
+  $loader-arrow-height: 80px;
+  $loader-arrow-left: calc( 100% + #{ 1px });
+  $loader-arrow-top: (( button.$height - $loader-arrow-supposed-height ) / 2 ) - $loader-arrow-supposed-top;
+  $loader-arrow-color: #FFC804;
+
+  $loader-size: 118px;
+  $loader-border: 13px;
+  $loader-top: 30px;
+  $loader-left: calc( 100% + #{ $loader-size / -2 });
+  $loader-border-color: #FFC804;
+  $loader-background: #fff;
+  $loader-progress: 0; // Только для демонстрации
+  $loader-progress-max: 100;
+  $loader-transition: $transition;
+
+  $loader-check-size: 29px;
+  $loader-check-color: $loader-border-color;
+
+  $loader-progress-font-size: 23px;
+  $loader-progress-font-family: MuseoSansCyrillic;
+  $loader-progress-font-weight: bold;
+  $loader-progress-width: $loader-size - ( $loader-border * 2 );
+  $loader-progress-line-height: 32px;
+  $loader-progress-color: #FFC804;
+
+
+
+  @include font.include( $title-font-family, $title-font-weight );
+  @include font.include( $fc-title-font-family, $fc-title-font-weight );
+  @include font.include( $fc-light-desc-font-family, $fc-light-desc-font-weight );
+  @include font.include( $loader-progress-font-family, $loader-progress-font-weight );
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Настройки
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  // Базовый стиль
+  .quiz-form {
+    $__selector: &;
+
+    @include background.init( url( '../images/backgrounds/quiz-form-back.svg' ));
+    @include background.color( $background );
+    @include transition.many( visibility max-height padding-top padding-bottom opacity margin-bottom, $transition );
+    padding: $padding-v $padding-h;
+    border-radius: $border-radius;
+    box-shadow: $shadow-x $shadow-y $shadow-blur $shadow-color;
+    overflow: hidden; max-height: 300vh;
+
+
+    // Заголовок
+    &__title {
+      @include font.init( $title-font-family, $title-font-weight );
+      line-height: $title-line-height;
+      font-size: $title-font-size;
+      margin-top: $title-spacing;
+      color: $title-color;
+    }
+
+
+    // Скрытый блок
+    &.type-2 {
+      height: $type2-min-height;
+      background: $background;
+
+
+      $data: _maps.get( containers.$settings, padding-verticals, default );
+      @each $key, $value in $data {
+        $value: -(( $type2-min-height + $value ) - ( $padding-v * 2 ) - $title-line-height );
+
+        $data: map.set( $data, $key, $value );
+      }
+      @include screens.media(( margin-bottom: $data ));
+
+
+      #{ $__selector }__title {
+        color: $type2-title-color;
+        margin-top: 0; text-align: center;
+      }
+    }
+
+
+    // Следующий блок
+    &:not( .hidden ) + & {
+      @include screens.media((
+        margin-top: _maps.get( containers.$settings, padding-verticals, default ),
+      ));
+    }
+
+
+    // Открытый / скрытый блок
+    &.hidden {
+      max-height: 0; padding-top: 0; padding-bottom: 0; opacity: 0; visibility: hidden;
+      & + #{ $__selector } { margin-bottom: 0; }
+    }
+  }
+
+
+  // Форма
+  .form-content {
+    @include flex.init( row, nowrap );
+
+
+    // Левая колонка
+    &__left {
+      margin-top: $fc-left-col-margin-top;
+      margin-left: $fc-left-col-margin-left;
+      margin-right: $fc-left-col-spacing;
+      width: $fc-left-col-width;
+
+      & > img { width: 100%; }
+    }
+
+    // Центральная колонка
+    &__center {
+      @include flex.init( column, nowrap );
+      margin-left: $fc-center-col-spacing;
+      width: $fc-center-col-width;
+
+
+      // Заголовок
+      &-title {
+        @include font.init( $fc-title-font-family, $fc-title-font-weight );
+        line-height: $fc-title-line-height;
+        font-size: $fc-title-font-size;
+        color: $fc-title-color;
+      }
+
+
+      // Контейнер для полей ввода данных
+      &-selects {
+        @include flex.init( column );
+        margin-top: $fc-sel-spacing;
+
+        .flags-container { margin-top: $fc-sel-radio-spacings; }
+      }
+
+
+      // Легкое описание
+      &-light-desc {
+        @include font.init( $fc-light-desc-font-family, $fc-light-desc-font-weight );
+        padding-left: _maps.get( flags.$settings, size ) + _maps.get( flags.$settings, spacing );
+        margin-top: $fc-light-desc-spacing;
+        line-height: $fc-light-desc-line-height;
+        font-size: $fc-light-desc-font-size;
+        color: $fc-light-desc-color;
+      }
+
+
+      // Колонка с полями ввода
+      &-inputs {
+        margin-left: $fc-inputs-shift-left;
+        margin-top: $fc-inputs-spacing;
+        width: $fc-inputs-width;
+      }
+    }
+
+    // Правая колонка
+    &__right {
+      margin-left: $fc-right-col-spacing;
+      width: $fc-right-col-width;
+    }
+  }
+
+
+  // Кнопка отправки квиза с лоадером
+  .form-loader {
+    $__selector: &;
+    top: calc( 100% + #{ $loader-top }); left: $loader-left;
+    width: $loader-size; height: $loader-size;
+    background-color: $loader-background;
+    position: absolute; border-radius: 50%; overflow: hidden;
+
+
+    // Обертка
+    &__container {
+      position: relative;
+      margin-bottom: calc( #{ $loader-size } + #{ $loader-top });
+    }
+
+
+    // Стрелка
+    &__arrow {
+      @include mask.init( url( '../images/misc/line-3.svg' ));
+      height: $loader-arrow-height;
+      width: $loader-arrow-width;
+      left: $loader-arrow-left;
+      top: $loader-arrow-top;
+      background-color: $loader-arrow-color;
+      position: absolute; display: block;
+    }
+
+
+    // Галочка
+    &__checker {
+      @include flex.init( row, nowrap, center, center );
+      top: $loader-border; left: $loader-border;
+      width: $loader-size - ( $loader-border * 2 );
+      height: $loader-size - ( $loader-border * 2 );
+      background-color: $loader-background;
+      position: absolute; border-radius: 50%; z-index: 3;
+
+      &-check {
+        @include transition.many( opacity visibility, $loader-transition );
+        @include mask.init( url( '../images/misc/check.svg' ));
+        width: $loader-check-size; height: $loader-check-size;
+        background-color: $loader-check-color;
+        opacity: 0; visibility: hidden;
+
+        #{ $__selector }.over-100 & { opacity: 1; visibility: visible; }
+      }
+
+      &-progress {
+        @include font.init( $loader-progress-font-family, $loader-progress-font-weight );
+        @include transition.many( opacity visibility, $loader-transition );
+        @include line.clamp( 1, $loader-progress-line-height );
+        width: $loader-progress-width;
+        top: ( $loader-size - ( $loader-border * 2 ) - $loader-progress-line-height ) / 2;
+        left: ( $loader-size - ( $loader-border * 2 ) - $loader-progress-width ) / 2;
+        font-size: $loader-progress-font-size;
+        color: $loader-progress-color;
+        position: absolute; text-align: center;
+
+
+        #{ $__selector }.over-100 & { opacity: 0; visibility: hidden; }
+        &:after { content: '%'; }
+      }
+    }
+
+
+    $__progress_style: ( 360 * $loader-progress ) / $loader-progress-max;
+    &__left, &__right {
+      position: absolute; width: 100%; height: 100%; left: 0; right: 0; overflow: hidden;
+      &::before { content: ''; position: absolute; display: block; width: 50%; height: 100%; }
+    }
+    &__left {
+      z-index: 2; border-radius: 50%;
+      &:before { background-color: $loader-background; }
+      #{ $__selector }.over-50 & {
+        transform: rotate( 180deg );
+        &:before { background-color: $loader-border-color; }
+      }
+    }
+    &__right {
+      transform: rotate( #{ $__progress_style }deg );
+      z-index: 1; border-radius: 50%;
+      &:before { background-color: $loader-border-color; }
+    }
+  }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------

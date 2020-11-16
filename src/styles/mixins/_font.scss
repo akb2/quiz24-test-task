@@ -13,6 +13,33 @@
 
 
   $font-files: (
+    Roboto: (
+      default: ( 'Roboto-Regular', 'ttf' ),
+      default-italic: ( 'Roboto-Italic', 'ttf' ),
+
+      100-normal: ( 'Roboto-Thin', 'ttf' ),
+      300-normal: ( 'Roboto-Light', 'ttf' ),
+      500-normal: ( 'Roboto-Medium', 'ttf' ),
+      700-normal: ( 'Roboto-Bold', 'ttf' ),
+      900-normal: ( 'Roboto-Black', 'ttf' ),
+
+      100-italic: ( 'Roboto-ThinItalic', 'ttf' ),
+      300-italic: ( 'Roboto-LightItalic', 'ttf' ),
+      500-italic: ( 'Roboto-MediumItalic', 'ttf' ),
+      700-italic: ( 'Roboto-BoldItalic', 'ttf' ),
+      900-italic: ( 'Roboto-BlackItalic', 'ttf' )
+    ),
+
+    BebasNeue: (
+      default-normal: ( "bebasneueregular", "ttf", "woff" ),
+
+      100-normal: ( "bebasneuethin", "ttf", "woff" ),
+      200-normal: ( "bebasneuelight", "ttf", "woff" ),
+      300-normal: ( "bebasneuebook", "ttf", "woff" ),
+
+      700-normal: ( "bebasneuebold", "ttf", "woff" )
+    ),
+
     MuseoSansCyrillic: (
       default-normal: ( "MuseoSansCyrl-300", "eot", "ttf", "woff" ),
       default-italic: ( "MuseoSansCyrl-300Italic", "eot", "ttf", "woff" ),

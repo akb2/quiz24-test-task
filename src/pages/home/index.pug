@@ -6,7 +6,7 @@ block content
 
 
   section.section
-    .container.container_medium
+    .container.ignore-spacing
       h1
         | Современные Комфортные Кухни
         span с пожизненной гарантией
@@ -14,7 +14,7 @@ block content
 
 
   section.section
-    .container
+    .container.ignore-spacing
       .list-offer
         .list-offer__image
           img( src = '../../images/covers/list-offer.jpg' )
@@ -27,8 +27,113 @@ block content
             | и простота в уходе
           .list-offer__content-list
             .list-offer__content-list-item
+            .list-offer__content-list-item
               | Гладкие, ровные поверхности без ручек
             .list-offer__content-list-item
               | «Умные»‎ материалы фасадов —
               br
               | нет отпечатков и царапин
+
+
+  section.section
+    .container
+      h3
+        span.blinks
+          b Акция!
+          |
+          | В честь 16-летия фабрики
+          br
+          | Скидки до 30% до 5 октября
+
+
+  section.section
+    .container
+      p
+        | Рассчитайте стоимость вашей кухни в 3-х комплектациях:
+        br
+        | «Эксклюзивная»‎, «Богатая»‎ и «Хорошая»‎ -
+        br
+        | и зафиксируйте
+        |
+        b.highlight цену по акции
+
+
+  section.section
+    .container
+      .d-flex.align-items-center
+        .button
+          .button__title Рассчитайте стоимость
+          .button__sub-title за 2 минуты
+        .some-thing_line-1.some-thing__spacing
+        .some-thing_installment-plan.some-thing__spacing
+          .some-thing_installment-plan__sub-title Честная рассрочка
+          .some-thing_installment-plan__title без переплат
+          .some-thing_installment-plan__graph 0-0-12
+
+
+  section.section
+    .container
+
+      .quiz-form#old_form
+
+        .text-center
+          h4
+            | Рассчитайте стоимость вашей кухни в 3-х комплектациях:
+            span «Эксклюзивная»‎, «Богатая»‎ и «Хорошая»‎
+
+        .row
+          .col-8.mt-4.offset-2
+            .progress-bar
+              .progress-bar__line( style = { width: ( 100 / 6 ) + '%' })
+                .progress-bar__title 1 из 6
+
+        .text-center
+          .quiz-form__title Мы уже приступили к расчёту стоимости кухни!
+
+        .form-content.inner-spacing.container_large
+          .form-content__left
+            img( src = '../../images/misc/phone-screen.png' )
+
+          .form-content__center
+            .form-content__center-title Как вам удобнее получить результат?
+            .form-content__center-selects
+              input( type = "radio" name = "some_select" value = "1" placeholder = "Пришлите расчет в WhatsApp" )
+              input( type = "radio" name = "some_select" value = "2" placeholder = "Пришлите расчет ссылкой в SMS" )
+              input( type = "radio" name = "some_select" value = "3" placeholder = "Перезвоните, у меня остались вопросы" )
+            .form-content__center-light-desc
+              | Введите номер телефона и получите
+              br
+              | расчет кухни в 3-х комплектациях
+            .form-content__center-inputs
+              input( type = "tel" name = "some_input" )
+              span.button.w-100.mt-5.form-loader__container( onclick = 'document.getElementById("old_form").classList.add("hidden");' )
+                .button__text Получить результат
+                .form-loader__arrow
+                .form-loader
+                  .form-loader__left
+                  .form-loader__right
+                  .form-loader__checker
+                    .form-loader__checker-check
+                    .form-loader__checker-progress
+
+          .form-content__right
+            .gift-block
+              .gift-block__title Ваш подарок
+              .gift-block__image
+                img( src = '../../images/covers/gift.jpg' )
+              .gift-block__content
+                .gift-block__content-title Кухонная мойка
+                .gift-block__content-offer
+                  .gift-block__content-offer-icon
+                  .gift-block__content-offer-text + СЮРПРИЗ! Петли с доводчиками на всю кухню
+                .gift-block__content-desc подарок будет забронирован за вашим номером
+              .gift-block__desc Этот подарок вы получите, если закажете кухню у нас
+
+        .row.mt-5
+          .col-6.text-left
+            span.link ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ
+          .col-6.text-right
+            span.link Разработано в Quiz24.ru
+
+      .quiz-form.type-2#new_form
+        .quiz-form__title Стоимость кухни в 3-х комплектациях

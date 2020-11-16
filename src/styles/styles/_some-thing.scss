@@ -1,0 +1,133 @@
+@use '../mixins/flex';
+@use '../mixins/mask';
+@use '../mixins/font';
+@use '../mixins/line';
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Данные
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  $line-1-width: 122px;
+  $line-1-height: 96px;
+  $line-1-color: #ffc804;
+  $line-1-correct-v: 15px;
+
+
+  $installment-plan-correct-top: -22px;
+  $installment-plan-border: 6px;
+  $installment-plan-border-color: #ff6305;
+  $installment-plan-border-radius: 12px;
+  $installment-plan-padding-h: 13px;
+  $installment-plan-padding-v: 7px;
+
+  $installment-plan-title-font-family: BebasNeue;
+  $installment-plan-title-font-weight: 700;
+  $installment-plan-title-font-size: 32px;
+  $installment-plan-title-line-height: 32px;
+  $installment-plan-title-text-transform: uppercase;
+  $installment-plan-title-color: #FF5F04;
+
+  $installment-plan-subtitle-font-family: BebasNeue;
+  $installment-plan-subtitle-font-weight: 700;
+  $installment-plan-subtitle-font-size: 22px;
+  $installment-plan-subtitle-line-height: 22px;
+  $installment-plan-subtitle-text-transform: uppercase;
+  $installment-plan-subtitle-color: #FF5F04;
+
+  $installment-plan-graph-rotate: -17deg;
+  $installment-plan-graph-spacing: 3px;
+  $installment-plan-graph-font-family: BebasNeue;
+  $installment-plan-graph-font-weight: 700;
+  $installment-plan-graph-font-size: 22px;
+  $installment-plan-graph-line-height: 22px;
+  $installment-plan-graph-text-transform: uppercase;
+  $installment-plan-graph-color: #FF5F04;
+
+  $spacing: 35px;
+
+
+  @include font.include( $installment-plan-title-font-family, $installment-plan-title-font-weight );
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Данные
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  .some-thing {
+
+    // Стрелка влево
+    &_line-1 {
+      @include mask.init( url( '../images/misc/line-2.svg' ));
+      width: $line-1-width; height: $line-1-height;
+      background-color: $line-1-color;
+      margin-top: $line-1-correct-v;
+    }
+
+    // Табличка выгоды
+    &_installment-plan {
+      @include flex.init( column, wrap, flex-start, center );
+      border: $installment-plan-border solid $installment-plan-border-color;
+      padding: $installment-plan-padding-v $installment-plan-padding-h;
+      padding-right: $installment-plan-padding-h + $installment-plan-graph-line-height + $installment-plan-graph-spacing;
+      border-radius: $installment-plan-border-radius;
+      max-height: ( $installment-plan-title-line-height + $installment-plan-subtitle-line-height ) + ( $installment-plan-padding-v * 2 ) + ( $installment-plan-border * 2 );
+      transform: rotate( $installment-plan-graph-rotate );
+      margin-top: $installment-plan-correct-top;
+      position: relative;
+
+      // Заголовок
+      &__title {
+        @include font.init( $installment-plan-title-font-family, $installment-plan-title-font-weight );
+        @include line.clamp( 1, $installment-plan-title-line-height );
+        font-size: $installment-plan-title-font-size;
+        color: $installment-plan-title-color;
+        text-transform: $installment-plan-title-text-transform;
+        display: block; text-align: center; text-transform: uppercase;
+      }
+
+      // Подзаголовок
+      &__sub-title {
+        @include font.init( $installment-plan-subtitle-font-family, $installment-plan-subtitle-font-weight );
+        @include line.clamp( 1, $installment-plan-subtitle-line-height );
+        font-size: $installment-plan-subtitle-font-size;
+        color: $installment-plan-subtitle-color;
+        text-transform: $installment-plan-subtitle-text-transform;
+        display: block; text-align: center; text-transform: uppercase;
+      }
+
+      // Информация о рассрочке
+      &__graph {
+        @include font.init( $installment-plan-graph-font-family, $installment-plan-graph-font-weight );
+        @include line.clamp( 1, $installment-plan-graph-line-height );
+        width: $installment-plan-title-line-height + $installment-plan-subtitle-line-height;
+        top: $installment-plan-padding-v - $installment-plan-graph-line-height;
+        left: calc( 100% - #{ $installment-plan-padding-h + $installment-plan-graph-line-height - $installment-plan-graph-spacing });
+        font-size: $installment-plan-graph-font-size;
+        color: $installment-plan-graph-color;
+        text-transform: $installment-plan-graph-text-transform;
+        position: absolute; transform-origin: 0 100%; transform: rotate( 90deg ); text-align: center;
+      }
+    }
+
+    // Стрелка влево
+    &__spacing { margin-left: $spacing; }
+  }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------

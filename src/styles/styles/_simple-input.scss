@@ -1,0 +1,81 @@
+@use '../functions/maps' as _maps;
+
+@use '../mixins/font';
+@use '../mixins/flex';
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Настройки
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  $color-background: #fff;
+  $color-border: #FF5F04;
+  $color-text: #000;
+  $color-placeholder-text: #000;
+
+
+  $settings: (
+    height: 64px,
+    border-width: 1px,
+    font-size: 18px,
+    line-height: 22px,
+    font-family: MuseoSansCyrillic,
+    font-weight: 300,
+    padding-horizontal: 20px,
+    border-radius: 32px,
+    text-align: center
+  );
+
+
+  @include font.include( _maps.get( $settings, font-family ), _maps.get( $settings, font-weight ));
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Настройки
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  @each $type in text, password, tel, email {
+    input[ type = #{ $type } ] {
+      $__border: _maps.get( $settings, border-width );
+      $__height: _maps.get( $settings, height );
+      $__lheight: _maps.get( $settings, line-height );
+      $__padding_v: ( $__height - $__lheight - ( $__border * 2 )) / 2;
+      $__padding_h: _maps.get( $settings, padding-horizontal );
+
+      @include font.init( _maps.get( $settings, font-family ), _maps.get( $settings, font-weight ));
+      border: $__border solid $color-border;
+      background-color: $color-background;
+      color: $color-text;
+      border-radius: _maps.get( $settings, border-radius );
+      font-size: _maps.get( $settings, font-size );
+      text-align: _maps.get( $settings, text-align );
+      padding: $__padding_v $__padding_h;
+      line-height: $__lheight;
+      height: $__height;
+      display: block; width: 100%;
+
+
+      // Плейсхолдер
+      @each $__selector in '::-webkit-input-placeholder', '::-moz-placeholder', ':-ms-input-placeholder', ':-moz-placeholder' {
+        &#{ $__selector } { color: $color-placeholder-text; }
+      }
+    }
+  }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------

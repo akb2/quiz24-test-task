@@ -1,4 +1,7 @@
 @use '../mixins/flex';
+@use '../mixins/font';
+@use '../mixins/line';
+@use '../mixins/mask';
 @use '../mixins/background';
 
 
@@ -18,6 +21,38 @@
   $thing-1-height: 66px;
   $thing-1-top: -27px;
   $thing-1-left: 0px;
+
+  $thing-2-width: 77px;
+  $thing-2-height: 40px;
+  $thing-2-top: -27px;
+  $thing-2-right: -( 5px + $image-spacing-right );
+  $thing-2-angle: 27deg;
+
+
+  $title-font-family: MuseoSansCyrillic;
+  $title-font-style: normal;
+  $title-font-weight: 500;
+  $title-font-size: 17px;
+  $title-lines: 3;
+  $title-line-height: 21px;
+  $title-color: #000;
+
+
+  $desc-spacing: 10px;
+  $desc-spacing-all: 50px;
+  $desc-font-family: MuseoSansCyrillic;
+  $desc-font-style: normal;
+  $desc-font-weight: 500;
+  $desc-font-size: 14px;
+  $desc-lines: 3;
+  $desc-line-height: 17px;
+  $desc-color: #000;
+
+  $desc-icon-size: $desc-line-height;
+  $desc-icon-spacing: 8px;
+
+
+  @include font.include( $title-font-family, $title-font-weight, $title-font-style );
 
 
 //------------------------------------------------------------------------------------------------------------
@@ -56,7 +91,14 @@
           display: block; position: absolute;
         }
 
-        &-2 {}
+        &-2 {
+          @include background.init( url( '../images/misc/line.svg' ));
+          @include background.size( contain );
+          width: $thing-2-width; height: $thing-2-height;
+          top: $thing-2-top; left: calc( 100% + #{ $thing-2-right });
+          transform: rotate( $thing-2-angle );
+          display: block; position: absolute;
+        }
       }
     }
 
@@ -65,9 +107,32 @@
     &__content {
       width: calc( 100% - #{ $image-width + $image-spacing-left + $image-spacing-right });
 
-      &-title {}
+      &-title {
+        @include font.init( $title-font-family, $title-font-weight, $title-font-style );
+        @include line.clamp( $title-lines, $title-line-height );
+        font-size: $title-font-size;
+        color: $title-color;
+      }
+
       &-list {
-        &-item {}
+        margin-top: $desc-spacing-all - $desc-spacing;
+
+        &-item {
+          @include font.init( $desc-font-family, $desc-font-weight, $desc-font-style );
+          @include line.clamp( $desc-lines, $desc-line-height );
+          padding-left: $desc-icon-size + $desc-icon-spacing;
+          font-size: $desc-font-size;
+          margin-top: $desc-spacing;
+          color: $desc-color;
+          position: relative;
+
+          &:before {
+            @include background.init( url( '../images/misc/square-check.svg' ));
+            @include background.size( contain );
+            content: ''; display: block; position: absolute; top: 0; left: 0;
+            width: $desc-icon-size; height: $desc-icon-size;
+          }
+        }
       }
     }
   }

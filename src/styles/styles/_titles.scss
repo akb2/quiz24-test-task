@@ -39,6 +39,42 @@
       text-transform: none,
       color: #000,
       title-spacing: 20px
+    ),
+
+    h3: (
+      font-size: 22px,
+      line-height: 26px,
+      font-family: MuseoSansCyrillic,
+      font-weight: 500,
+      text-transform: none,
+      color: #000,
+      span: (
+        new-line: true,
+        font-size: 22px,
+        line-height: 26px,
+        font-family: MuseoSansCyrillic,
+        font-weight: 500,
+        text-transform: none,
+        color: #FF6A05,
+      )
+    ),
+
+    h4: (
+      font-size: 20px,
+      line-height: 26px,
+      font-family: MuseoSansCyrillic,
+      font-weight: 300,
+      text-transform: none,
+      color: #000,
+      span: (
+        new-line: true,
+        font-size: 20px,
+        line-height: 28px,
+        font-family: MuseoSansCyrillic,
+        font-weight: 600,
+        text-transform: none,
+        color: #000,
+      )
     )
   );
 
@@ -90,6 +126,12 @@
           @if ( _maps.get( $style, span, new-line ))
             { display: block; }
         }
+      }
+
+      & > b, & > span > b {
+        font-family: inherit; font-style: inherit; font-weight: 900;
+        font-size: inherit; line-height: inherit; text-transform: inherit;
+        color: inherit;
       }
     }
   }

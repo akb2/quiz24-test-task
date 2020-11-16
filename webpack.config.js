@@ -143,6 +143,10 @@ module.exports = ( env, option ) => {
         },
         plugins: [
             new webpack.ProgressPlugin(),
+            new webpack.ProvidePlugin({
+                $: 'jquery',
+                jQuery: 'jquery'
+            }),
             new MiniCssExtractPlugin ({
                 filename: config.folders.output.styles + '/' + config.styles.export_name + '.css'
             }),

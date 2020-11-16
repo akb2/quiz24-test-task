@@ -1,0 +1,184 @@
+@use 'sass:math';
+
+@use '../mixins/flex';
+@use '../mixins/font';
+@use '../mixins/line';
+@use '../mixins/mask';
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Данные
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  $border-radius: 6px;
+
+  $title-border-radius: $border-radius $border-radius 0 0;
+  $title-padding-h: 36px;
+  $title-font-family: MuseoSansCyrillic;
+  $title-font-weight: bold;
+  $title-font-size: 22px;
+  $title-line-height: 46px;
+  $title-background: #FFC804;
+  $title-color: #000;
+
+  $image-height: 175px;
+
+  $content-padding-v: 9px;
+  $content-padding-h: 14px;
+  $content-background: #FF7905;
+  $content-border-radius: 0 0 $border-radius $border-radius;
+
+  $content-title-end-spacing: $content-padding-v;
+  $content-title-font-family: MuseoSansCyrillic;
+  $content-title-font-weight: 500;
+  $content-title-font-size: 20px;
+  $content-title-line-height: 28px;
+  $content-title-color: #fff;
+
+  $content-desc-spacing: $content-padding-v;
+  $content-desc-font-family: MuseoSansCyrillic;
+  $content-desc-font-weight: 500;
+  $content-desc-font-size: 14px;
+  $content-desc-lines: 2;
+  $content-desc-line-height: 18px;
+  $content-desc-color: #fff;
+
+  $desc-spacing: 15px;
+  $desc-font-family: MuseoSansCyrillic;
+  $desc-font-weight: 500;
+  $desc-font-size: 12px;
+  $desc-lines: 2;
+  $desc-line-height: 18px;
+  $desc-color: #000;
+
+  $offer-border-radius: 6px;
+  $offer-padding-v: 7px;
+  $offer-padding-h: $offer-padding-v;
+  $offer-lines: 2;
+  $offer-line-height: 19px;
+  $offer-icon-spacing: $offer-padding-h;
+  $offer-icon-max-size: 30px;
+  $offer-icon-size: math.min( $offer-icon-max-size, $offer-line-height * $offer-lines );
+  $offer-text-width: calc( 100% - #{ $offer-icon-size + $offer-icon-spacing });
+  $offer-background: #fff;
+  $offer-color: #FF7905;
+  $offer-icon: #FF7905;
+  $offer-font-family: MuseoSansCyrillic;
+  $offer-font-weight: bold;
+  $offer-font-size: 14px;
+
+
+  @include font.include( $title-font-family, $title-font-weight );
+  @include font.include( $content-title-font-family, $content-title-font-weight );
+  @include font.include( $offer-font-family, $offer-font-weight );
+  @include font.include( $content-desc-font-family, $content-desc-font-weight );
+  @include font.include( $desc-font-family, $desc-font-weight );
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Данные
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  .gift-block {
+    @include flex.init( column, nowrap, flex-start, stretch );
+
+
+    // Заголовок
+    &__title {
+      @include font.init( $title-font-family, $title-font-weight );
+      @include line.clamp( 1, $title-line-height );
+      background-color: $title-background;
+      border-radius: $title-border-radius;
+      padding: 0 $title-padding-h;
+      font-size: $title-font-size;
+      color: $title-color;
+      text-align: center;
+    }
+
+
+    // Обложка
+    &__image {
+      width: 100%; height: $image-height;
+      & > img { width: 100%; height: 100%; object-fit: cover; }
+    }
+
+
+    // Описание
+    &__content {
+      padding: $content-padding-v $content-padding-h;
+      border-radius: $content-border-radius;
+      background: $content-background;
+
+      // Заголовок
+      &-title {
+        @include font.init( $content-title-font-family, $content-title-font-weight );
+        @include line.clamp( 1, $content-title-line-height );
+        margin-bottom: $content-title-end-spacing;
+        font-size: $content-title-font-size;
+        color: $content-title-color;
+        text-align: center;
+      }
+
+      // Оффер
+      &-offer {
+        @include flex.init( row, nowrap, space-between, center );
+        border-radius: $offer-border-radius;
+        padding: $offer-padding-v $offer-padding-h;
+        background-color: $offer-background;
+
+        &-icon {
+          @include mask.init( url( '../images/misc/gift-box.svg' ));
+          width: $offer-icon-size;
+          height: $offer-icon-size;
+          background-color: $offer-icon;
+        }
+
+        &-text {
+          @include font.init( $offer-font-family, $offer-font-weight );
+          @include line.clamp( $offer-lines, $offer-line-height );
+          font-size: $offer-font-size;
+          width: $offer-text-width;
+          color: $offer-color;
+        }
+      }
+
+      // Описание
+      &-desc {
+        @include font.init( $content-desc-font-family, $content-desc-font-weight );
+        @include line.clamp( $content-desc-lines, $content-desc-line-height );
+        margin-top: $content-desc-spacing;
+        font-size: $content-desc-font-size;
+        color: $content-desc-color;
+        text-align: center;
+      }
+    }
+
+
+    // Описание после блока
+    &__desc {
+      @include font.init( $desc-font-family, $desc-font-weight );
+      @include line.clamp( $desc-lines, $desc-line-height );
+      margin-top: $desc-spacing;
+      font-size: $desc-font-size;
+      color: $desc-color;
+      text-align: center;
+    }
+  }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------

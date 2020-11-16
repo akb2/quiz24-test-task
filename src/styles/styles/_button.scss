@@ -1,0 +1,130 @@
+@use '../mixins/font';
+@use '../mixins/line';
+@use '../mixins/background';
+@use '../mixins/transition';
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Данные
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  $title-font-family: MuseoSansCyrillic;
+  $title-font-weight: bold;
+  $title-font-style: normal;
+  $title-font-size: 16px;
+  $title-line-height: 19px;
+  $title-color: #fff;
+  $title-shadow-x: 0px;
+  $title-shadow-y: 0px;
+  $title-shadow-blur: 4px;
+  $title-shadow-color: #863600;
+  $title-text-transform: uppercase;
+
+  $subtitle-font-family: MuseoSansCyrillic;
+  $subtitle-font-weight: 300;
+  $subtitle-font-style: normal;
+  $subtitle-font-size: 15px;
+  $subtitle-line-height: 19px;
+  $subtitle-color: #fff;
+  $subtitle-shadow-x: 0px;
+  $subtitle-shadow-y: 0px;
+  $subtitle-shadow-blur: 4px;
+  $subtitle-shadow-color: #863600;
+  $subtitle-text-transform: none;
+
+  $text-font-family: MuseoSansCyrillic;
+  $text-font-weight: bold;
+  $text-font-style: normal;
+  $text-font-size: 16px;
+  $text-line-height: 19px;
+  $text-color: #fff;
+  $text-text-transform: uppercase;
+
+  $height: 62px;
+  $border-radius: $height / 2;
+  $padding-x: 25px;
+  $padding-y: ( $height - ( $title-line-height + $subtitle-line-height )) / 2;
+
+  $gradient-start-color: #FFAA04;
+  $gradient-end-color: #FF5F04;
+  $gradient-hover-start-color: $gradient-start-color;
+  $gradient-hover-end-color: $gradient-start-color;
+  $gradient-click-start-color: $gradient-end-color;
+  $gradient-click-end-color: $gradient-end-color;
+  $transition: .3s;
+
+  $shadow-color-x: 0px;
+  $shadow-color-y: 0px;
+  $shadow-color-blur: 15px;
+  $shadow-color: rgba( 0, 0, 0, 0.6 );
+
+
+  @include font.include( $title-font-family, $title-font-weight, $title-font-style );
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Данные
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  .button {
+    @include background.linear-gradient( 180deg, ( $gradient-start-color 0%, $gradient-end-color 100% ));
+    @include transition.many( background box-shadow, $transition );
+    box-shadow: $shadow-color-x $shadow-color-y $shadow-color-blur $shadow-color;
+    border-radius: $border-radius;
+    padding: $padding-y $padding-x;
+    height: $height;
+    display: inline-block; vertical-align: middle; text-align: center; cursor: pointer;
+
+
+    &:hover { @include background.linear-gradient( 180deg, ( $gradient-hover-start-color 0%, $gradient-hover-end-color 100% )); }
+    &:active {
+      @include background.linear-gradient( 180deg, ( $gradient-click-start-color 0%, $gradient-click-end-color 100% ));
+      box-shadow: inset $shadow-color-x $shadow-color-y $shadow-color-blur $shadow-color;
+    }
+
+
+    &__title {
+      @include font.init( $title-font-family, $title-font-weight, $title-font-style );
+      @include line.clamp( 1, $title-line-height );
+      text-shadow: $title-shadow-x $title-shadow-y $title-shadow-blur $title-shadow-color;
+      text-transform: $title-text-transform;
+      font-size: $title-font-size;
+      color: $title-color;
+    }
+
+    &__sub-title {
+      @include font.init( $subtitle-font-family, $subtitle-font-weight, $subtitle-font-style );
+      @include line.clamp( 1, $subtitle-line-height );
+      text-shadow: $subtitle-shadow-x $subtitle-shadow-y $subtitle-shadow-blur $subtitle-shadow-color;
+      text-transform: $subtitle-text-transform;
+      font-size: $subtitle-font-size;
+      color: $subtitle-color;
+    }
+
+    &__text {
+      @include font.init( $text-font-family, $text-font-weight, $text-font-style );
+      @include line.clamp( 1, $text-line-height );
+      margin-top: ( $height - (( $padding-y * 2 ) + $text-line-height )) / 2;
+      text-transform: $text-text-transform;
+      font-size: $text-font-size;
+      color: $text-color;
+    }
+  }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------

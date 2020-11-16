@@ -17,42 +17,52 @@
     spacing: 15px,
     margin: 5px,
 
-    cols: ( 3 ),
-    cols-default: 3,
+    cols: ( 12 ),
+    cols-default: 12,
+  );
+
+
+  $justify-content: (
+    between: space-between
   );
 
 
   $align-items: (
-    //center: center,
+    center: center,
     //around: space-around
   );
 
 
   $text-align: (
-    //left: left,
-    //right: right,
+    left: left,
+    right: right,
     center: center
   );
 
 
   $widths: (
-    //percent: (
-    //  unit: '%',
-    //  pref: 'w',
-    //  min: 80,
-    //  max: 100,
-    //),
+    percent: (
+      unit: '%',
+      pref: 'w',
+      min: 100,
+      max: 100,
+    ),
   );
 
 
   $margins: (
     //all: top right bottom left,
-    //t: top,
+    t: top,
     //r: right,
     //b: bottom,
     //l: left,
     //x: left right,
     //y: top bottom,
+  );
+
+
+  $displays: (
+    flex: flex,
   );
 
 
@@ -85,6 +95,14 @@
   }
 
 
+  // Способы отображения
+  .d {
+    @each $key, $value in $displays {
+      &-#{ $key } { display: $value; }
+    }
+  }
+
+
   // Размеры колонок
   @each $screen in _maps.get( screens.$breakpoints-sort, to-min ) {
     $__screen_class: '-' + $screen;
@@ -104,6 +122,32 @@
 
           #{ $__col_class }#{ $__cols_class } {
             @include flex.width( $__col_width * $col );
+          }
+        }
+      }
+    }
+  }
+
+
+  // Пустые пространства между колонками
+  @each $screen in _maps.get( screens.$breakpoints-sort, to-min ) {
+    $__screen_class: '-' + $screen;
+    $__resolution: _maps.get( screens.$breakpoints, $screen );
+    @if ( $screen == all ) { $__screen_class: ''; }
+
+    @media screen and ( min-width: #{ screens.get-min( $__resolution )}px ) {
+      @each $cols in _maps.get( $settings, cols ) {
+        $__cols_class: '.cols' + $__screen_class + '-' + $cols;
+        @if ( $cols == _maps.get( $settings, cols-default )) { $__cols_class: ''; }
+
+        $__col_width: 100% / $cols;
+
+
+        @for $col from 1 through $cols {
+          $__col_class: '.offset' + $__screen_class + '-' + $col;
+
+          #{ $__col_class }#{ $__cols_class } {
+            margin-left: $__col_width * $col;
           }
         }
       }
@@ -151,6 +195,14 @@
 
 
   // Флекс элементы по второстепенной оси
+  .justify-content {
+    @each $key, $value in $justify-content {
+      &-#{ $key } { justify-content: $value; }
+    }
+  }
+
+
+  // Флекс элементы по второстепенной оси
   .align-items {
     @each $key, $value in $align-items {
       &-#{ $key } { align-items: $value; }
@@ -187,7 +239,7 @@
 //----------------------------------------------------------------------------------------------------------------------------------------
 
 
-  // Флекс элементы по второстепенной оси
+  // Внешние отступы ( Margin )
   @each $screen in _maps.get( screens.$breakpoints-sort, to-min ) {
     $__screen_class: '-' + $screen;
     $__resolution: _maps.get( screens.$breakpoints, $screen );

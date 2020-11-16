@@ -1,0 +1,148 @@
+@use '../settings/screens';
+
+@use 'sass:math';
+@use '../functions/maps' as _maps;
+
+@use '../mixins/flex';
+@use '../mixins/font';
+@use '../mixins/line';
+@use '../mixins/transition';
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Настройки
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  $settings: (
+    size: 28px,
+    border: 1px,
+    spacing: 12px,
+
+    checked: (
+      size: 16px,
+      border: 0px,
+    ),
+
+    lines: 2,
+    font-size: 20px,
+    line-height: 25px,
+    font-family: MuseoSansCyrillic,
+    font-weight: 300,
+
+    mobile-lines: 3,
+    mobile-font-size: 16px,
+    mobile-line-height: 20px,
+
+    transition: .3s
+  );
+
+
+  $colors: (
+    border: #F26E04,
+    background: #fff,
+    color: #000,
+    check-color: #F26E04,
+  );
+
+
+  @include font.include( _maps.get( $settings, font-family ), _maps.get( $settings, font-weight ));
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Настройки
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  .flags-container {
+    $__size: _maps.get( $settings, size );
+    $__border: _maps.get( $settings, border );
+    $__selector: &;
+
+
+    @include flex.init( row, nowrap, space-between, center );
+    @include line.select( none );
+
+
+    // Стилизация инпута
+    &__input {
+      display: none; order: 0;
+      &:checked ~ #{ $__selector }__item:before { opacity: 1; visibility: visible; }
+    }
+
+
+    // Вспомогательный блок
+    &__item {
+      $__size_in: _maps.get( $settings, checked, size );
+      $__spacing: ( _maps.get( $settings, size ) - $__size_in - ( _maps.get( $settings, border ) * 2 )) / 2;
+      $__border: _maps.get( $settings, checked, border );
+
+      @include flex.width( $__size );
+      @include flex.height( $__size );
+      background: _maps.get( $colors, background );
+      border: _maps.get( $settings, border ) solid _maps.get( $colors, border );
+      position: relative; display: block; order: 1; cursor: pointer;
+
+      &:before {
+        @include transition.many( opacity, _maps.get( $settings, transition ));
+        content: ''; position: absolute; opacity: 0; visibility: hidden;
+        top: $__spacing; left: $__spacing; width: $__size_in; height: $__size_in;
+        background-color: _maps.get( $colors, check-color );
+      }
+
+      input[ type = 'radio' ] ~ & { &, &:before { border-radius: 50%; }}
+    }
+
+
+    // Пользовательская подпись
+    &__helper {
+      $__size: _maps.get( $settings, size );
+      $__spacing: _maps.get( $settings, spacing );
+
+      @include font.init( _maps.get( $settings, font-family ), _maps.get( $settings, font-weight ));
+      @include line.clamp( _maps.get( $settings, lines ), _maps.get( $settings, line-height ));
+      @include flex.width( calc( 100% - #{ $__size }));
+      font-size: _maps.get( $settings, font-size );
+      padding-left: $__spacing;
+      order: 2; cursor: pointer;
+    }
+  }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили для телефона
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+  .flags-container {
+
+    // Пользовательская подпись
+    &__helper {
+      @include line.clamp( _maps.get( $settings, mobile-lines ), _maps.get( $settings, mobile-line-height ));
+      font-size: _maps.get( $settings, mobile-font-size );
+    }
+  }
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// Стили для телефона
+//----------------------------------------------------------------------------------------------------------------------------------------

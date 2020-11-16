@@ -4,7 +4,7 @@
 
 
   // Инициализировать Flex блок
-  @mixin init ( $image: none, $pos_x: center, $pos_y: center, $repeat: no-repeat, $size: cover ) {
+  @mixin init ( $image: none, $pos_x: center, $pos_y: center, $repeat: no-repeat, $size: cover, $color: transparent ) {
     @include image( $image );
     @include position( $pos_x, $pos_y );
     @include repeat( $repeat );
@@ -15,6 +15,12 @@
   // Картинка
   @mixin image ( $image: none ) {
     background-image: $image;
+  }
+
+
+  // Картинка
+  @mixin color ( $color: transparent ) {
+    background-color: $color;
   }
 
 

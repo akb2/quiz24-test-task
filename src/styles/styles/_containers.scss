@@ -33,6 +33,11 @@
         default: 70px,
       ),
 
+      // Средний отступ
+      large: (
+        default: 90px,
+      ),
+
       // Для шапки
       header: (
         default: 20px,
@@ -126,16 +131,31 @@
         }
       }
     }
+
+
+    // Отсупы у рандомных элементов
+    & {
+      @each $key, $values in _maps.get( $settings, padding-verticals ) {
+        $class: '';
+        @if ( $key != default ) { $class: '.container_' + $key; }
+
+        .inner-spacing#{ $class } {
+          padding-top: 0;
+          padding-bottom: 0;
+
+          @include screens.media((
+            margin-top: _maps.get( $settings, padding-verticals, $key ),
+          ));
+        }
+      }
+    }
   }
-
-
-  // Сбросить стили
 
 
   // Убрать отступы между секциями
   .section, header {
-    & + .section {
-      & > .container { padding-top: 0; }
+    & + .section:not( .ignore-spacing ) {
+      & > .container:not( .ignore-spacing ) { padding-top: 0; }
     }
   }
 
